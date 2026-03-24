@@ -1,0 +1,196 @@
+Building configuration...
+
+Current configuration : 2664 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Core-R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+memory-size iomem 5
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree vlan 1 priority 8192
+spanning-tree vlan 10 priority 8192
+spanning-tree vlan 20 priority 8192
+archive
+ log config
+  hidekeys
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport mode trunk
+!
+interface FastEthernet0/0
+ description *** UPLINK_TO_FIREWALL ***
+ ip address 192.168.1.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** TO_WINDOWS_SERVER ***
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet2/0
+ description *** SINGLE_LINKS_TO_ACCESS_SWITCHES ***
+ switchport mode trunk
+!
+interface FastEthernet2/1
+ description *** SINGLE_LINKS_TO_ACCESS_SWITCHES ***
+ switchport mode trunk
+!
+interface FastEthernet2/2
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface FastEthernet2/3
+ description *** TO_WINDOWS_SERVER ***
+ switchport access vlan 10
+ spanning-tree portfast
+!
+interface FastEthernet2/4
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface FastEthernet2/5
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/6
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/7
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/8
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/9
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/10
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/11
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/12
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/13
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/14
+ switchport access vlan 50
+ shutdown
+!
+interface FastEthernet2/15
+ switchport access vlan 50
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ description *** GATEWAY_FOR_SERVERS ***
+ ip address 192.168.10.1 255.255.255.0
+!
+interface Vlan20
+ description *** GATEWAY_FOR_USERS ***
+ ip address 192.168.20.1 255.255.255.0
+ ip helper-address 192.168.10.10
+!
+router ospf 1
+ log-adjacency-changes
+ network 192.168.1.0 0.0.0.255 area 0
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+ip route 0.0.0.0 0.0.0.0 192.168.1.1
+!
+!
+ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+!
+!
+end
