@@ -1,7 +1,5 @@
 # Enterprise-Network-Lab-v1
-# Enterprise HA Networking Lab
 Technical configurations and topology for a multi-tier Cisco/Windows infrastructure lab.
-
 ## Key Features
 * **Security:** ASAv Stateful Inspection (MPF)
 * **Redundancy:** EtherChannel
